@@ -1,4 +1,6 @@
 import { Suspense, lazy } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes } from 'react-router-dom';
 import { PrivateRoute } from 'routes/PrivateRoute';
 import { PublicRoute } from 'routes/PublicRoute';
@@ -34,6 +36,7 @@ export const App = () => {
         </Routes>
       </Suspense>
       <Footer />
+      <ToastContainer position="top-right" theme="colored" autoClose={2000} />
     </>
   );
 };

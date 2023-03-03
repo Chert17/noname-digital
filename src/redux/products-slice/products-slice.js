@@ -56,6 +56,7 @@ export default productSlice.reducer;
 export const productSelector = state => state.products.products;
 export const productIdSelector = state => state.products.productId;
 export const productItemSelector = state => state.products.productItem;
+export const statusSelector = state => state.products.status;
 
 // Persistor
 

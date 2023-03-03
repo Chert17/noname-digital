@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/auth-slice/auth-slice';
@@ -42,7 +43,7 @@ export const useAuth = () => {
       .catch(console.warn);
 
   const loginUser = (email, password) =>
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(({ user }) => {
         dispatch(
           setUser({

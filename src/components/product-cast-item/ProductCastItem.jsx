@@ -42,6 +42,7 @@ const ProductCastItem = ({ product }) => {
             edge="end"
             aria-label="remove"
             color="primary"
+            disabled={product.quantity === 1}
           >
             <RemoveIcon />
           </IconButton>

@@ -4,20 +4,28 @@ import ImageSlider from 'components/ui/slider/ImageSlider';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { productItemSelector } from 'redux/products-slice/products-slice';
+import {
+  productItemSelector,
+  statusSelector,
+} from 'redux/products-slice/products-slice';
 import { getProductByIdThunk } from 'redux/products-slice/products-thunk';
 import { addProductToCast } from 'redux/cast-slice/cast-slice';
 import { tokenSelector } from 'redux/auth-slice/auth-slice';
 import { Modal } from 'components/ui/modal/Modal';
 import ModalInfo from 'components/ui/modal-info/ModalInfo';
+import { Status } from 'constants/status';
+import { toast } from 'react-toastify';
 
 const ProductPage = () => {
   const { productId } = useParams();
   const location = useLocation();
   const path = location.state?.from || '/';
-  const token = useSelector(tokenSelector);
+
   const dispatch = useDispatch();
+  const token = useSelector(tokenSelector);
+  const status = useSelector(statusSelector);
   const product = useSelector(productItemSelector) ?? {};
+
   const { title, brand, description, images, price } = product;
 
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +41,10 @@ const ProductPage = () => {
 
   const addProduct = () => {
     if (!token) setShowModal(true);
-    else dispatch(addProductToCast({ ...product, quantity: 1 }));
+    else {
+      dispatch(addProductToCast({ ...product, quantity: 1 }));
+      if (status === Status.SUCCESS) toast.success('item added to cart');
+    }
   };
 
   return (

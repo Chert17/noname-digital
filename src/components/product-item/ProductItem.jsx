@@ -11,19 +11,28 @@ import {
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProductId } from 'redux/products-slice/products-slice';
+import {
+  setProductId,
+  statusSelector,
+} from 'redux/products-slice/products-slice';
 import { tokenSelector } from 'redux/auth-slice/auth-slice';
 import { addProductToCast } from 'redux/cast-slice/cast-slice';
+import { Status } from 'constants/status';
+import { toast } from 'react-toastify';
 
 const ProductItem = ({ product, location, setShowModal }) => {
   const { title, thumbnail, description, price, id } = product;
 
   const dispatch = useDispatch();
   const token = useSelector(tokenSelector);
+  const status = useSelector(statusSelector);
 
   const addProduct = () => {
     if (!token) setShowModal(true);
-    else dispatch(addProductToCast({ ...product, quantity: 1 }));
+    else {
+      dispatch(addProductToCast({ ...product, quantity: 1 }));
+      if (status === Status.SUCCESS) toast.success('item added to cart');
+    }
   };
 
   return (
